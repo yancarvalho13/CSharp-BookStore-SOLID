@@ -1,0 +1,31 @@
+# .NET build
+**/[Bb]in/
+**/[Oo]bj/
+**/[Dd]ebug/
+**/[Rr]elease/
+**/[Pp]ublish/
+
+# Testes
+TestResults/
+*.pdb
+*.trx
+*.coverage*
+.vstest/
+
+# IDEs
+.idea/
+.vs/
+*.suo
+*.user
+*.rsuser
+*.sln.iml
+_ReSharper.Caches/
+
+# Logs/temporários
+*.log
+*.tmp
+*.cache
+
+# DB locais
+*.db*
+*.sqlite*

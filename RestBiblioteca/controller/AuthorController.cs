@@ -23,7 +23,7 @@ public class AuthorController : ControllerBase
             .Select(a => new AuthorResponseDTO(
                 a.Id, a.Name, a.BirthDate, a.Nationality, a.Books.Select(
                     b => new BookResponseDTO(
-                        b.Id,b.Name, b.Author.Name,b.Category, b.Publisher.Name))
+                        b.Id,b.Name, a.Name,b.Category, b.Publisher.Name))
                 )).ToList();
         return Ok(response);
     }

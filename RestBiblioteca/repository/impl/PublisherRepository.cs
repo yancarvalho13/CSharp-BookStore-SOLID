@@ -16,6 +16,7 @@ public class PublisherRepository : IPublisherRepository
     { 
        return await _dbContext.Publishers
             .Include(p => p.Books)
+            .ThenInclude(b=> b.Author)
             .ToListAsync();
     }
 

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using RestBiblioteca.controller.DTO;
 using RestBiblioteca.model;
 using RestBiblioteca.service;
 
@@ -19,19 +20,24 @@ public class BookController : ControllerBase
     public async Task<IActionResult> GetAll()
     {
         var books = await _bookService.GetAllAsync();
-        return Ok(books);
+        var response = books
+            .Select(b => new BookResponseDTO(
+                b.Id, b.Name, b.Author.Name, b.Category, b.Publisher.Name)).ToList();
+        return Ok(response);
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] Book? book)
+    public async Task<IActionResult> Create([FromBody] BookRequestDTO? request)
     {
-        if (book is null)
+        if (request is null)
         {
             return BadRequest(new { message = "Book is null" });
         }
 
-        var created = await _bookService.CreateAsync(book);
-        return Ok(created);
+        var created = await _bookService.CreateAsync(new Book(
+            request.Name, request.AuthorId,request.PublisherId, request.Category));
+        
+        return Ok();
     }
     
 }

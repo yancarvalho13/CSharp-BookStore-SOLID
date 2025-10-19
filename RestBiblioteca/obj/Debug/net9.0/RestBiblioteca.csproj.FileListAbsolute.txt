@@ -132,3 +132,4 @@
 /home/yanonjava/RiderProjects/RestBiblioteca/RestBiblioteca/bin/Debug/net9.0/Swashbuckle.AspNetCore.Swagger.dll
 /home/yanonjava/RiderProjects/RestBiblioteca/RestBiblioteca/bin/Debug/net9.0/Swashbuckle.AspNetCore.SwaggerGen.dll
 /home/yanonjava/RiderProjects/RestBiblioteca/RestBiblioteca/bin/Debug/net9.0/Swashbuckle.AspNetCore.SwaggerUI.dll
+/home/yanonjava/RiderProjects/RestBiblioteca/RestBiblioteca/obj/Debug/net9.0/RestBiblioteca.sourcelink.json
