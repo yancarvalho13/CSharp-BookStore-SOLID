@@ -39,5 +39,23 @@ public class BookController : ControllerBase
         
         return Ok();
     }
+
+    [HttpGet("{id}")]
+    public async  Task<IActionResult> GetById(long id)
+    {
+        var book = await _bookService.GetByIdAsync(id);
+        if (book is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(new BookResponseDTO(
+             book.Id,
+             book.Name,
+             book.GetAuthorName(),
+             book.Category,
+             book.GetPublisherName())
+        );
+    }
     
 }

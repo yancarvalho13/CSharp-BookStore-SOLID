@@ -2,4 +2,4 @@ using RestBiblioteca.model;
 
 namespace RestBiblioteca.controller.DTO;
 
-public record BookRequestDTO(string Name, Guid AuthorId, Category Category, Guid PublisherId);
+public record BookRequestDTO(string Name, long AuthorId, Category Category, long PublisherId);

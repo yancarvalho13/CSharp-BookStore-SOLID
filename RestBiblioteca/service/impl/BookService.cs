@@ -16,7 +16,7 @@ public class BookService : IBookService
         return await _bookRepository.GetAllAsync();
     }
 
-    public async Task<Book?> GetByIdAsync(Guid id)
+    public async Task<Book?> GetByIdAsync(long id)
     {
         return await _bookRepository.GetByIdAsync(id);
     }
@@ -28,7 +28,7 @@ public class BookService : IBookService
         return book;
     }
 
-    public async Task<Book?> UpdateAsync(Guid id, Book book)
+    public async Task<Book?> UpdateAsync(long id, Book book)
     {
         var existing = await _bookRepository.GetByIdAsync(id);
         if (existing == null) return null;
@@ -39,7 +39,7 @@ public class BookService : IBookService
 
     }
 
-    public async Task<bool> DeleteAsync(Guid id)
+    public async Task<bool> DeleteAsync(long id)
     {
         await _bookRepository.DeleteAsync(id);
         await _bookRepository.SaveChangesAsync();

@@ -26,7 +26,7 @@ public class BookRepository : IBookRepository
         
     }
 
-    public async Task<Book?> GetByIdAsync(Guid id)
+    public async Task<Book?> GetByIdAsync(long id)
     {
         return await _dbContext.Books
             .Include(b => b.Author)
@@ -40,7 +40,7 @@ public class BookRepository : IBookRepository
 
     }
 
-    public async Task DeleteAsync(Guid id)
+    public async Task DeleteAsync(long id)
     {
         var bookDb = await _dbContext.Books.FindAsync(id);
         if (bookDb != null)

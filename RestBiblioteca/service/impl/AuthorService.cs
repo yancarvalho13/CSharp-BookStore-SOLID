@@ -19,7 +19,7 @@ public class AuthorService : IAuthorService
         return await _authorRepository.GetAllAsync();   
     }
 
-    public async Task<Author?> GetByIdAsync(Guid id)
+    public async Task<Author?> GetByIdAsync(long id)
     {
         return await _authorRepository.GetByIdAsync(id);  
     }
@@ -31,7 +31,7 @@ public class AuthorService : IAuthorService
         return author;
     }
 
-    public async Task<Author?> UpdateAsync(Guid id, Author author)
+    public async Task<Author?> UpdateAsync(long id, Author author)
     {
         var existing = await _authorRepository.GetByIdAsync(id);
         if(existing == null) return null;
@@ -41,7 +41,7 @@ public class AuthorService : IAuthorService
         return author;
     }
 
-    public async Task<bool> DeleteAsync(Guid id)
+    public async Task<bool> DeleteAsync(long id)
     {
         _authorRepository.DeleteAsync(id);
         await _authorRepository.SaveChangesAsync();

@@ -6,9 +6,9 @@ public interface IBookRepository
 {
     Task<IEnumerable<Book>> GetAllAsync();
     Task CreateAsync(Book book);
-    Task<Book?> GetByIdAsync(Guid id);
+    Task<Book?> GetByIdAsync(long id);
     void Update(Book book);
-    Task DeleteAsync(Guid id);
+    Task DeleteAsync(long id);
     
     Task SaveChangesAsync();
 }

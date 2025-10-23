@@ -6,8 +6,8 @@ public interface IPublisherRepository
 {
     Task<IEnumerable<Publisher>> GetAllAsync();
     Task CreateAsync(Publisher publisher);
-    Task<Publisher?> GetByIdAsync(Guid id);
+    Task<Publisher?> GetByIdAsync(long id);
     void Update(Publisher publisher);
-    Task DeleteAsync(Guid id);
+    Task DeleteAsync(long id);
     Task SaveChangesAsync();
 }

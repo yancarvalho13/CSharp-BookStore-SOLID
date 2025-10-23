@@ -17,7 +17,7 @@ public class PublisherService : IPublisherService
         return await _publisherRepository.GetAllAsync();
     }
 
-    public async Task<Publisher?> GetByIdAsync(Guid id)
+    public async Task<Publisher?> GetByIdAsync(long id)
     {
         return await _publisherRepository.GetByIdAsync(id);
     }
@@ -29,7 +29,7 @@ public class PublisherService : IPublisherService
         return publisher;   
     }
 
-    public async Task<Publisher?> UpdateAsync(Guid id, Publisher publisher)
+    public async Task<Publisher?> UpdateAsync(long id, Publisher publisher)
     {
         var existing = await _publisherRepository.GetByIdAsync(id);
         if(existing == null) return null;
@@ -39,7 +39,7 @@ public class PublisherService : IPublisherService
         return existing;
     }
 
-    public async Task<bool> DeleteAsync(Guid id)
+    public async Task<bool> DeleteAsync(long id)
     {
         await _publisherRepository.DeleteAsync(id);
         await _publisherRepository.SaveChangesAsync();

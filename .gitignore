@@ -1,31 +1,46 @@
-# .NET build
-**/[Bb]in/
-**/[Oo]bj/
-**/[Dd]ebug/
-**/[Rr]elease/
-**/[Pp]ublish/
+# Build results
+/bin/
+/obj/
+/out/
+/Debug/
+/Release/
 
-# Testes
-TestResults/
-*.pdb
-*.trx
-*.coverage*
-.vstest/
-
-# IDEs
+# Rider e VS
 .idea/
-.vs/
-*.suo
+.vscode/
 *.user
-*.rsuser
-*.sln.iml
-_ReSharper.Caches/
+*.suo
+*.userosscache
+*.sln.docstates
 
-# Logs/temporários
-*.log
+# Arquivos temporários
 *.tmp
+*.log
 *.cache
+*.pdb
+*.dbmdl
+*.bak
 
-# DB locais
-*.db*
-*.sqlite*
+# Arquivos gerados
+*.dll
+*.exe
+*.mdb
+*.xml
+*.json.user
+*.nuget.dgspec.json
+*.nuget.g.props
+*.nuget.g.targets
+
+# Diretórios de build incremental
+/RestBiblioteca/bin/
+/RestBiblioteca/obj/
+
+# Coverage, publish, etc.
+coverage/
+TestResults/
+publish/
+
+# Outros
+*.swp
+*.DS_Store
+Thumbs.db

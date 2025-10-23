@@ -2,7 +2,7 @@ namespace RestBiblioteca.model;
 
 public class Author
 {
-    public Guid Id {get; private set; }
+    public long Id {get; private set; }
     public string Name { get; private set; } = default!;
     public DateTime BirthDate {get; private set; } 
     public string Nationality {get; private set;}

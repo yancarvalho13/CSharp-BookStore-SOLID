@@ -25,7 +25,7 @@ public class PublisherRepository : IPublisherRepository
         await _dbContext.Publishers.AddAsync(publisher);
     }
 
-    public async Task<Publisher?> GetByIdAsync(Guid id)
+    public async Task<Publisher?> GetByIdAsync(long id)
     {
         return await _dbContext.Publishers.FindAsync(id);
     }
@@ -35,7 +35,7 @@ public class PublisherRepository : IPublisherRepository
         _dbContext.Publishers.Update(publisher);
     }
 
-    public async Task DeleteAsync(Guid id)
+    public async Task DeleteAsync(long id)
     {
         var publisherDb = await _dbContext.Publishers.FindAsync(id);
         if (publisherDb != null)

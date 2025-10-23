@@ -17,9 +17,10 @@ public class AppDbContext : DbContext
         {
             e.ToTable("books");
             e.HasKey(b => b.Id);
-            
+
             e.Property(b => b.Id)
-                .HasDefaultValueSql("gen_random_uuid()");
+                .ValueGeneratedOnAdd()
+                .HasIdentityOptions(startValue: 1);
             
             e.Property(b => b.Name)
                 .HasMaxLength(256)
@@ -47,7 +48,8 @@ public class AppDbContext : DbContext
             e.HasKey(a => a.Id);
 
             e.Property(a => a.Id)
-                .HasDefaultValueSql("gen_random_uuid()");
+                .ValueGeneratedOnAdd()
+                .HasIdentityOptions(startValue: 1);
 
             e.Property(a => a.Name)
                 .HasMaxLength(256)
@@ -69,9 +71,10 @@ public class AppDbContext : DbContext
         {
             e.ToTable("publishers");
             e.HasKey(p => p.Id);
-            
+
             e.Property(p => p.Id)
-                .HasDefaultValueSql("gen_random_uuid()");
+                .ValueGeneratedOnAdd()
+                .HasIdentityOptions(startValue: 1);
             
             e.Property(p => p.Name)
                 .HasMaxLength(256)

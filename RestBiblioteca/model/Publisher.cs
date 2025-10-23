@@ -2,7 +2,7 @@ namespace RestBiblioteca.model;
 
 public class Publisher
 {
-    public Guid Id {get; private set; }
+    public long Id {get; private set; }
     public string Name { get; private set; } = default!;
     public string Country { get; private set; } = default!;
 

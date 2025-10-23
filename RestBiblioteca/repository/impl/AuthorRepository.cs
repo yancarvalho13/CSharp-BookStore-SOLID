@@ -25,7 +25,7 @@ public class AuthorRepository : IAuthorRepository
         await _dbContext.Authors.AddAsync(author);
     }
 
-    public async Task<Author?> GetByIdAsync(Guid id)
+    public async Task<Author?> GetByIdAsync(long id)
     {
         return await _dbContext.Authors.FindAsync(id);
     }
@@ -35,7 +35,7 @@ public class AuthorRepository : IAuthorRepository
         _dbContext.Authors.Update(author);
     }
 
-    public async Task DeleteAsync(Guid id)
+    public async Task DeleteAsync(long id)
     {
         var authorDb = await _dbContext.Authors.FindAsync(id);
         if (authorDb != null)

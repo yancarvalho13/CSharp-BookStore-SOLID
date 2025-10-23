@@ -12,8 +12,8 @@ using RestBiblioteca;
 namespace RestBiblioteca.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251019015339_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20251023022601_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,10 +27,12 @@ namespace RestBiblioteca.Migrations
 
             modelBuilder.Entity("RestBiblioteca.model.Author", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasDefaultValueSql("gen_random_uuid()");
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+                    NpgsqlPropertyBuilderExtensions.HasIdentityOptions(b.Property<long>("Id"), 1L, null, null, null, null, null);
 
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("date");
@@ -52,13 +54,15 @@ namespace RestBiblioteca.Migrations
 
             modelBuilder.Entity("RestBiblioteca.model.Book", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasDefaultValueSql("gen_random_uuid()");
+                        .HasColumnType("bigint");
 
-                    b.Property<Guid>("AuthorId")
-                        .HasColumnType("uuid");
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+                    NpgsqlPropertyBuilderExtensions.HasIdentityOptions(b.Property<long>("Id"), 1L, null, null, null, null, null);
+
+                    b.Property<long>("AuthorId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Category")
                         .IsRequired()
@@ -70,8 +74,8 @@ namespace RestBiblioteca.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
 
-                    b.Property<Guid>("PublisherId")
-                        .HasColumnType("uuid");
+                    b.Property<long>("PublisherId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -84,10 +88,12 @@ namespace RestBiblioteca.Migrations
 
             modelBuilder.Entity("RestBiblioteca.model.Publisher", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasDefaultValueSql("gen_random_uuid()");
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+                    NpgsqlPropertyBuilderExtensions.HasIdentityOptions(b.Property<long>("Id"), 1L, null, null, null, null, null);
 
                     b.Property<string>("Country")
                         .IsRequired()

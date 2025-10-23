@@ -2,17 +2,17 @@ namespace RestBiblioteca.model;
 
 public class Book
 {
-    public Guid Id {get; private set; }
+    public long Id {get; private set; }
     public string Name { get; private set; } = default!;
     
-    public Guid AuthorId {get; private set;}
+    public long AuthorId {get; private set;}
     public Author Author { get; private set; } = default!;
     public Category Category { get; private set; }
     
-    public Guid PublisherId {get; private set;}
+    public long PublisherId {get; private set;}
     public Publisher Publisher { get; private set; } = default!;
 
-    public Book(string name, Guid authorId, Guid publisherId, Category category)
+    public Book(string name, long authorId, long publisherId, Category category)
     {
         Name = name;
         AuthorId = authorId;
@@ -30,5 +30,14 @@ public class Book
         AuthorId = book.AuthorId;
         Category = book.Category;
         PublisherId = book.PublisherId;
+    }
+
+    public String GetPublisherName()
+    {
+        return Publisher.Name;
+    }
+    public String GetAuthorName()
+    {
+        return Author.Name;
     }
 }
