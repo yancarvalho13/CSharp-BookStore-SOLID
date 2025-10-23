@@ -57,5 +57,17 @@ public class BookController : ControllerBase
              book.GetPublisherName())
         );
     }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteBYId(long id)
+    {
+        var book = await _bookService.GetByIdAsync(id);
+        if (book is null)
+        {
+            return NotFound();
+        }
+        await _bookService.DeleteAsync(id);
+        return Ok(book);
+    }
     
 }
