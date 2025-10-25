@@ -107,6 +107,42 @@ namespace RestBiblioteca.Migrations
                     b.ToTable("publishers", (string)null);
                 });
 
+            modelBuilder.Entity("RestBiblioteca.model.User", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+                    NpgsqlPropertyBuilderExtensions.HasIdentityOptions(b.Property<long>("Id"), 1L, null, null, null, null, null);
+
+                    b.Property<DateTime>("BirthDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("users", (string)null);
+                });
+
             modelBuilder.Entity("RestBiblioteca.model.Book", b =>
                 {
                     b.HasOne("RestBiblioteca.model.Author", "Author")
@@ -124,6 +160,72 @@ namespace RestBiblioteca.Migrations
                     b.Navigation("Author");
 
                     b.Navigation("Publisher");
+                });
+
+            modelBuilder.Entity("RestBiblioteca.model.User", b =>
+                {
+                    b.OwnsOne("RestBiblioteca.model.Adress", "Adress", b1 =>
+                        {
+                            b1.Property<long>("UserId")
+                                .HasColumnType("bigint");
+
+                            b1.Property<string>("Cep")
+                                .IsRequired()
+                                .HasMaxLength(8)
+                                .HasColumnType("character varying(8)")
+                                .HasColumnName("cep");
+
+                            b1.Property<string>("City")
+                                .IsRequired()
+                                .HasMaxLength(120)
+                                .HasColumnType("character varying(120)")
+                                .HasColumnName("city");
+
+                            b1.Property<int>("Ddd")
+                                .HasMaxLength(3)
+                                .HasColumnType("integer")
+                                .HasColumnName("ddd");
+
+                            b1.Property<string>("Neighborhood")
+                                .IsRequired()
+                                .HasMaxLength(120)
+                                .HasColumnType("character varying(120)")
+                                .HasColumnName("neighborhood");
+
+                            b1.Property<string>("Region")
+                                .IsRequired()
+                                .HasMaxLength(9)
+                                .HasColumnType("character varying(9)")
+                                .HasColumnName("region");
+
+                            b1.Property<string>("State")
+                                .IsRequired()
+                                .HasMaxLength(120)
+                                .HasColumnType("character varying(120)")
+                                .HasColumnName("state");
+
+                            b1.Property<string>("Street")
+                                .IsRequired()
+                                .HasMaxLength(120)
+                                .HasColumnType("character varying(120)")
+                                .HasColumnName("street");
+
+                            b1.Property<string>("Uf")
+                                .IsRequired()
+                                .HasMaxLength(2)
+                                .HasColumnType("character varying(2)")
+                                .HasColumnName("uf");
+
+                            b1.HasKey("UserId");
+
+                            b1.ToTable("users");
+
+                            b1.WithOwner()
+                                .HasForeignKey("UserId");
+                        });
+
+                    b.Navigation("Adress")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("RestBiblioteca.model.Author", b =>

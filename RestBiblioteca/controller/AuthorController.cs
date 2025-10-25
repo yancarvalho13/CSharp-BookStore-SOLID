@@ -18,9 +18,9 @@ public class AuthorController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAll ()
     {
-        var authors = await _authorService.GetAllAsync();
+        var authors = await _authorService.GetAll();
         var response = authors
-            .Select(a => new AuthorResponseDTO(
+            .Select(a => new AuthorResponseDto(
                 a.Id, a.Name, a.BirthDate, a.Nationality, a.Books.Select(
                     b => new BookResponseDTO(
                         b.Id,b.Name, a.Name,b.Category, b.Publisher.Name))
@@ -29,15 +29,15 @@ public class AuthorController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(AuthorRequestDTO? dto)
+    public async Task<IActionResult> Create(AuthorRequestDto? dto)
     {
         if (dto is null)
         {
             return BadRequest();
         }
         var author = new Author(dto.Name, dto.BirthDate, dto.Nationality);
-        await _authorService.CreateAsync(author);
+        await _authorService.Create(author);
         
-        return Ok(new AuthorResponseDTO(author.Id, author.Name, author.BirthDate, author.Nationality, new List<BookResponseDTO>()));
+        return Ok(new AuthorResponseDto(author.Id, author.Name, author.BirthDate, author.Nationality, new List<BookResponseDTO>()));
     }
 }

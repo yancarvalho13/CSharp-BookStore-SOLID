@@ -12,37 +12,37 @@ public class PublisherService : IPublisherService
         _publisherRepository = publisherRepository;
     }
 
-    public async Task<IEnumerable<Publisher>> GetAllAsync()
+    public async Task<IEnumerable<Publisher>> GetAll()
     {
-        return await _publisherRepository.GetAllAsync();
+        return await _publisherRepository.GetAll();
     }
 
-    public async Task<Publisher?> GetByIdAsync(long id)
+    public async Task<Publisher?> GetById(long id)
     {
-        return await _publisherRepository.GetByIdAsync(id);
+        return await _publisherRepository.GetById(id);
     }
 
-    public async Task<Publisher> CreateAsync(Publisher publisher)
+    public async Task<Publisher> Create(Publisher publisher)
     {
-        await _publisherRepository.CreateAsync(publisher);
-        await _publisherRepository.SaveChangesAsync();
+        await _publisherRepository.Create(publisher);
+        await _publisherRepository.SaveChanges();
         return publisher;   
     }
 
-    public async Task<Publisher?> UpdateAsync(long id, Publisher publisher)
+    public async Task<Publisher?> Update(long id, Publisher publisher)
     {
-        var existing = await _publisherRepository.GetByIdAsync(id);
+        var existing = await _publisherRepository.GetById(id);
         if(existing == null) return null;
         existing.Update(publisher);
         _publisherRepository.Update(existing); 
-        await _publisherRepository.SaveChangesAsync();
+        await _publisherRepository.SaveChanges();
         return existing;
     }
 
-    public async Task<bool> DeleteAsync(long id)
+    public async Task<bool> Delete(long id)
     {
-        await _publisherRepository.DeleteAsync(id);
-        await _publisherRepository.SaveChangesAsync();
+        await _publisherRepository.Delete(id);
+        await _publisherRepository.SaveChanges();
         return true;   
     }
 }

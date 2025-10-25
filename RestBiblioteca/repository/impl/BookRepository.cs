@@ -12,7 +12,7 @@ public class BookRepository : IBookRepository
         _dbContext = dbContext;
     }
     
-    public async Task<IEnumerable<Book>> GetAllAsync()
+    public async Task<IEnumerable<Book>> GetAll()
     {
         return await _dbContext.Books
             .Include(b => b.Author)
@@ -20,13 +20,13 @@ public class BookRepository : IBookRepository
             .ToListAsync();
     }
 
-    public async Task CreateAsync(Book book)
+    public async Task Create(Book book)
     {
         await _dbContext.Books.AddAsync(book);
         
     }
 
-    public async Task<Book?> GetByIdAsync(long id)
+    public async Task<Book?> GetById(long id)
     {
         return await _dbContext.Books
             .Include(b => b.Author)
@@ -40,7 +40,7 @@ public class BookRepository : IBookRepository
 
     }
 
-    public async Task DeleteAsync(long id)
+    public async Task Delete(long id)
     {
         var bookDb = await _dbContext.Books.FindAsync(id);
         if (bookDb != null)
@@ -49,7 +49,7 @@ public class BookRepository : IBookRepository
         }
     }
 
-    public async Task SaveChangesAsync()
+    public async Task SaveChanges()
     {
         await _dbContext.SaveChangesAsync();
     }

@@ -5,9 +5,9 @@ namespace RestBiblioteca.service;
 
 public interface IBookService
 {
-    Task<IEnumerable<Book>> GetAllAsync();
-    Task<Book?> GetByIdAsync(long id);
-    Task<Book> CreateAsync(Book book);
-    Task<Book?> UpdateAsync(long id, Book book);
-    Task<bool> DeleteAsync(long id);
+    Task<IEnumerable<Book>> GetAll();
+    Task<Book?> GetById(long id);
+    Task<Book> Create(Book book);
+    Task<Book?> Update(long id, Book book);
+    Task<bool> Delete(long id);
 }

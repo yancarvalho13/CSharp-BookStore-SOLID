@@ -4,11 +4,11 @@ namespace RestBiblioteca.repository;
 
 public interface IBookRepository
 {
-    Task<IEnumerable<Book>> GetAllAsync();
-    Task CreateAsync(Book book);
-    Task<Book?> GetByIdAsync(long id);
+    Task<IEnumerable<Book>> GetAll();
+    Task Create(Book book);
+    Task<Book?> GetById(long id);
     void Update(Book book);
-    Task DeleteAsync(long id);
+    Task Delete(long id);
     
-    Task SaveChangesAsync();
+    Task SaveChanges();
 }

@@ -20,7 +20,7 @@ public class PublisherController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAll ()
     {
-        var publishers = await _publisherService.GetAllAsync();
+        var publishers = await _publisherService.GetAll();
         var response = publishers.Select(p => new PublisherResponseDTO(
             p.Id, p.Name, p.Country,
             p.Books.Select(b => new BookResponseDTO(
@@ -37,7 +37,7 @@ public class PublisherController : ControllerBase
             return BadRequest(new { message = "Publisher is null" });
         }
 
-        var publisher = await _publisherService.CreateAsync(new Publisher(
+        var publisher = await _publisherService.Create(new Publisher(
             request.Name, request.Country));
         var response = new PublisherResponseDTO(
             publisher.Id, publisher.Name, publisher.Country, new List<BookResponseDTO>());

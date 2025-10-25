@@ -14,37 +14,37 @@ public class AuthorService : IAuthorService
     }
 
 
-    public async Task<IEnumerable<Author>> GetAllAsync()
+    public async Task<IEnumerable<Author>> GetAll()
     {
-        return await _authorRepository.GetAllAsync();   
+        return await _authorRepository.GetAll();   
     }
 
-    public async Task<Author?> GetByIdAsync(long id)
+    public async Task<Author?> GetById(long id)
     {
-        return await _authorRepository.GetByIdAsync(id);  
+        return await _authorRepository.GetById(id);  
     }
 
-    public async Task<Author> CreateAsync(Author author)
+    public async Task<Author> Create(Author author)
     {
-        await _authorRepository.CreateAsync(author);
-        await _authorRepository.SaveChangesAsync();
+        await _authorRepository.Create(author);
+        await _authorRepository.SaveChanges();
         return author;
     }
 
-    public async Task<Author?> UpdateAsync(long id, Author author)
+    public async Task<Author?> Update(long id, Author author)
     {
-        var existing = await _authorRepository.GetByIdAsync(id);
+        var existing = await _authorRepository.GetById(id);
         if(existing == null) return null;
         existing.Update(author);
         _authorRepository.Update(existing);
-        await _authorRepository.SaveChangesAsync();
+        await _authorRepository.SaveChanges();
         return author;
     }
 
-    public async Task<bool> DeleteAsync(long id)
+    public async Task<bool> Delete(long id)
     {
-        _authorRepository.DeleteAsync(id);
-        await _authorRepository.SaveChangesAsync();
+        _authorRepository.Delete(id);
+        await _authorRepository.SaveChanges();
         return true;
     }
 }

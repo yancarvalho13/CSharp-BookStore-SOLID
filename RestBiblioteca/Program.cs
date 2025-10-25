@@ -19,7 +19,9 @@ builder.Services.AddScoped<IPublisherRepository, PublisherRepository>();
 builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<IAuthorService, AuthorService>();
 builder.Services.AddScoped<IPublisherService, PublisherService>();
-
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddHttpClient<IAdressFinder, ViaCepAdapter>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

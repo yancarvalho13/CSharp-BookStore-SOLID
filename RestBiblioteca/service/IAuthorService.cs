@@ -5,9 +5,9 @@ namespace RestBiblioteca.service;
 
 public interface IAuthorService
 {
- Task<IEnumerable<Author>> GetAllAsync();
- Task<Author?> GetByIdAsync(long id);
- Task<Author> CreateAsync(Author author);
- Task<Author?> UpdateAsync(long id, Author author);
- Task<bool> DeleteAsync(long id);
+ Task<IEnumerable<Author>> GetAll();
+ Task<Author?> GetById(long id);
+ Task<Author> Create(Author author);
+ Task<Author?> Update(long id, Author author);
+ Task<bool> Delete(long id);
 }

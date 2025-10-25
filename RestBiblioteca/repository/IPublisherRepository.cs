@@ -4,10 +4,10 @@ namespace RestBiblioteca.repository;
 
 public interface IPublisherRepository
 {
-    Task<IEnumerable<Publisher>> GetAllAsync();
-    Task CreateAsync(Publisher publisher);
-    Task<Publisher?> GetByIdAsync(long id);
+    Task<IEnumerable<Publisher>> GetAll();
+    Task Create(Publisher publisher);
+    Task<Publisher?> GetById(long id);
     void Update(Publisher publisher);
-    Task DeleteAsync(long id);
-    Task SaveChangesAsync();
+    Task Delete(long id);
+    Task SaveChanges();
 }

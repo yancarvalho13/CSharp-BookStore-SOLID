@@ -9,6 +9,8 @@ public class AppDbContext : DbContext
     public DbSet<Author> Authors { get; set; }
     public DbSet<Publisher> Publishers { get; set; }
     
+    public DbSet<User> Users { get; set; }
+    
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) {}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -88,6 +90,52 @@ public class AppDbContext : DbContext
                 .UsePropertyAccessMode(PropertyAccessMode.Field);
 
         });
+
+        modelBuilder.Entity<User>(e =>
+        {
+            e.ToTable("users");
+            e.HasKey(u => u.Id);
+
+            e.Property(u => u.Id)
+                .ValueGeneratedOnAdd()
+                .HasIdentityOptions(startValue: 1);
+
+            e.Property(u => u.Username)
+                .IsRequired()
+                .HasMaxLength(256);
+
+            e.Property(u => u.Password)
+                .IsRequired()
+                .HasMaxLength(256);
+
+            e.Property(u => u.Email)
+                .HasMaxLength(256)
+                .IsRequired();
+
+            e.Property(u => u.BirthDate)
+                .IsRequired()
+                .HasColumnType("date");
+
+            e.Property(u => u.Role)
+                .HasConversion<String>()
+                .IsRequired();
+
+            e.OwnsOne(u => u.Adress, nav =>
+            {
+                nav.Property(a => a.Cep).HasColumnName("cep").HasMaxLength(8);
+                nav.Property(a => a.City).HasColumnName("city").HasMaxLength(120);
+                nav.Property(a => a.Ddd).HasColumnName("ddd").HasMaxLength(3);
+                nav.Property(a => a.Neighborhood).HasColumnName("neighborhood").HasMaxLength(120);
+                nav.Property(a => a.Region).HasColumnName("region").HasMaxLength(9);
+                nav.Property(a => a.State).HasColumnName("state").HasConversion<string>().HasMaxLength(120);
+                nav.Property(a => a.Street).HasColumnName("street").HasMaxLength(120);
+                nav.Property(a => a.Uf).HasColumnName("uf").HasConversion<string>().HasMaxLength(2);
+
+            });
+
+        });
+
+
     }
 
 }

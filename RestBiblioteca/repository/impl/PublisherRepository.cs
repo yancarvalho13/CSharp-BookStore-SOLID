@@ -12,7 +12,7 @@ public class PublisherRepository : IPublisherRepository
         _dbContext = dbContext;
     }
 
-    public async Task<IEnumerable<Publisher>> GetAllAsync()
+    public async Task<IEnumerable<Publisher>> GetAll()
     { 
        return await _dbContext.Publishers
             .Include(p => p.Books)
@@ -20,12 +20,12 @@ public class PublisherRepository : IPublisherRepository
             .ToListAsync();
     }
 
-    public async Task CreateAsync(Publisher publisher)
+    public async Task Create(Publisher publisher)
     {
         await _dbContext.Publishers.AddAsync(publisher);
     }
 
-    public async Task<Publisher?> GetByIdAsync(long id)
+    public async Task<Publisher?> GetById(long id)
     {
         return await _dbContext.Publishers.FindAsync(id);
     }
@@ -35,7 +35,7 @@ public class PublisherRepository : IPublisherRepository
         _dbContext.Publishers.Update(publisher);
     }
 
-    public async Task DeleteAsync(long id)
+    public async Task Delete(long id)
     {
         var publisherDb = await _dbContext.Publishers.FindAsync(id);
         if (publisherDb != null)
@@ -44,7 +44,7 @@ public class PublisherRepository : IPublisherRepository
         }
     }
 
-    public async Task SaveChangesAsync()
+    public async Task SaveChanges()
     {
         await _dbContext.SaveChangesAsync();
     }

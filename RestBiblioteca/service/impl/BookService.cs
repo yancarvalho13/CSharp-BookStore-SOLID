@@ -11,38 +11,38 @@ public class BookService : IBookService
         _bookRepository = bookRepository;
     }
 
-    public async Task<IEnumerable<Book>> GetAllAsync()
+    public async Task<IEnumerable<Book>> GetAll()
     {
-        return await _bookRepository.GetAllAsync();
+        return await _bookRepository.GetAll();
     }
 
-    public async Task<Book?> GetByIdAsync(long id)
+    public async Task<Book?> GetById(long id)
     {
-        return await _bookRepository.GetByIdAsync(id);
+        return await _bookRepository.GetById(id);
     }
 
-    public async Task<Book> CreateAsync(Book book)
+    public async Task<Book> Create(Book book)
     {
-        await _bookRepository.CreateAsync(book);
-        await _bookRepository.SaveChangesAsync();
+        await _bookRepository.Create(book);
+        await _bookRepository.SaveChanges();
         return book;
     }
 
-    public async Task<Book?> UpdateAsync(long id, Book book)
+    public async Task<Book?> Update(long id, Book book)
     {
-        var existing = await _bookRepository.GetByIdAsync(id);
+        var existing = await _bookRepository.GetById(id);
         if (existing == null) return null;
         existing.Update(book);
         _bookRepository.Update(existing);
-        await _bookRepository.SaveChangesAsync();
+        await _bookRepository.SaveChanges();
         return existing;
 
     }
 
-    public async Task<bool> DeleteAsync(long id)
+    public async Task<bool> Delete(long id)
     {
-        await _bookRepository.DeleteAsync(id);
-        await _bookRepository.SaveChangesAsync();
+        await _bookRepository.Delete(id);
+        await _bookRepository.SaveChanges();
         return true;
     }
 }
