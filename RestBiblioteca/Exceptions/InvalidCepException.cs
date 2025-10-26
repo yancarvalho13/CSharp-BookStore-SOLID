@@ -1,7 +1,9 @@
+using System.Net;
+
 namespace RestBiblioteca.Exceptions;
 
-public class InvalidCepException : Exception
+public class InvalidCepException : HttpException
 {
-    public InvalidCepException(string message)
-        : base(message) { }
+    public InvalidCepException(string message = "Cep inválido")
+        : base(HttpStatusCode.BadRequest, message) { }
 }

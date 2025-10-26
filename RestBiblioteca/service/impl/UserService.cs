@@ -22,7 +22,7 @@ public class UserService : IUserService
         var adressInfo = await _adressFinder.findAdressAsync(userRequest.Cep);
         if (adressInfo is null)
         {
-            throw new InvalidCepException("Cep inválido");
+            throw new InvalidCepException();
         }
 
         var validAdress = new Adress(adressInfo.cep.Replace("-",""),
