@@ -1,0 +1,207 @@
+[1mdiff --git a/RestBiblioteca/Exceptions/HttpException.cs b/RestBiblioteca/Exceptions/HttpException.cs[m
+[1mnew file mode 100644[m
+[1mindex 0000000..fec4b60[m
+[1m--- /dev/null[m
+[1m+++ b/RestBiblioteca/Exceptions/HttpException.cs[m
+[36m@@ -0,0 +1,17 @@[m
+[32m+[m[32musing System.Net;[m
+[32m+[m
+[32m+[m[32mnamespace RestBiblioteca.Exceptions;[m
+[32m+[m
+[32m+[m[32mpublic class HttpException : Exception[m
+[32m+[m[32m{[m
+[32m+[m[32m    public int StatusCode {get;}[m
+[32m+[m[32m    public object? Payload {get;}[m
+[32m+[m[41m    [m
+[32m+[m[32m    public HttpException(HttpStatusCode statusCode, string message, object? payload = null) : base(message)[m
+[32m+[m[32m    {[m
+[32m+[m[32m        StatusCode = (int)statusCode;[m
+[32m+[m[32m        Payload = payload;[m
+[32m+[m[32m    }[m
+[32m+[m[41m    [m
+[32m+[m[41m    [m
+[32m+[m[32m}[m
+\ No newline at end of file[m
+[1mdiff --git a/RestBiblioteca/Exceptions/InvalidCepException.cs b/RestBiblioteca/Exceptions/InvalidCepException.cs[m
+[1mindex e77b262..772ecfe 100644[m
+[1m--- a/RestBiblioteca/Exceptions/InvalidCepException.cs[m
+[1m+++ b/RestBiblioteca/Exceptions/InvalidCepException.cs[m
+[36m@@ -1,7 +1,9 @@[m
+[32m+[m[32musing System.Net;[m
+[32m+[m
+ namespace RestBiblioteca.Exceptions;[m
+ [m
+[31m-public class InvalidCepException : Exception[m
+[32m+[m[32mpublic class InvalidCepException : HttpException[m
+ {[m
+[31m-    public InvalidCepException(string message)[m
+[31m-        : base(message) { }[m
+[32m+[m[32m    public InvalidCepException(string message = "Cep inválido")[m
+[32m+[m[32m        : base(HttpStatusCode.BadRequest, message) { }[m
+ }[m
+\ No newline at end of file[m
+[1mdiff --git a/RestBiblioteca/Program.cs b/RestBiblioteca/Program.cs[m
+[1mindex 625eb8b..0f8ab64 100644[m
+[1m--- a/RestBiblioteca/Program.cs[m
+[1m+++ b/RestBiblioteca/Program.cs[m
+[36m@@ -1,43 +1,47 @@[m
+[31m-using Microsoft.EntityFrameworkCore;[m
+[31m-using RestBiblioteca;[m
+[31m-using RestBiblioteca.repository;[m
+[31m-using RestBiblioteca.repository.impl;[m
+[31m-using RestBiblioteca.service;[m
+[31m-using RestBiblioteca.service.impl;[m
+[32m+[m[32m    using Microsoft.EntityFrameworkCore;[m
+[32m+[m[32m    using RestBiblioteca;[m
+[32m+[m[32m    using RestBiblioteca.infra;[m
+[32m+[m[32m    using RestBiblioteca.repository;[m
+[32m+[m[32m    using RestBiblioteca.repository.impl;[m
+[32m+[m[32m    using RestBiblioteca.service;[m
+[32m+[m[32m    using RestBiblioteca.service.impl;[m
+ [m
+[31m-var builder = WebApplication.CreateBuilder(args);[m
+[32m+[m[32m    var builder = WebApplication.CreateBuilder(args);[m
+ [m
+[31m-builder.Services.AddDbContext<AppDbContext>(opt =>[m
+[31m-    opt.UseNpgsql(builder.Configuration.GetConnectionString("Postgres")));[m
+[32m+[m[32m    builder.Services.AddDbContext<AppDbContext>(opt =>[m
+[32m+[m[32m        opt.UseNpgsql(builder.Configuration.GetConnectionString("Postgres")));[m
+ [m
+[31m-// Add services to the container.[m
+[31m-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi[m
+[32m+[m[32m    // Add services to the container.[m
+[32m+[m[32m    // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi[m
+ [m
+[31m-builder.Services.AddScoped<IBookRepository, BookRepository>();[m
+[31m-builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();[m
+[31m-builder.Services.AddScoped<IPublisherRepository, PublisherRepository>();[m
+[31m-builder.Services.AddScoped<IBookService, BookService>();[m
+[31m-builder.Services.AddScoped<IAuthorService, AuthorService>();[m
+[31m-builder.Services.AddScoped<IPublisherService, PublisherService>();[m
+[31m-builder.Services.AddScoped<IUserRepository, UserRepository>();[m
+[31m-builder.Services.AddScoped<IUserService, UserService>();[m
+[31m-builder.Services.AddHttpClient<IAdressFinder, ViaCepAdapter>();[m
+[31m-builder.Services.AddControllers();[m
+[31m-builder.Services.AddEndpointsApiExplorer();[m
+[31m-builder.Services.AddSwaggerGen();[m
+[31m-var app = builder.Build();[m
+[32m+[m[32m    builder.Services.AddScoped<IBookRepository, BookRepository>();[m
+[32m+[m[32m    builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();[m
+[32m+[m[32m    builder.Services.AddScoped<IPublisherRepository, PublisherRepository>();[m
+[32m+[m[32m    builder.Services.AddScoped<IBookService, BookService>();[m
+[32m+[m[32m    builder.Services.AddScoped<IAuthorService, AuthorService>();[m
+[32m+[m[32m    builder.Services.AddScoped<IPublisherService, PublisherService>();[m
+[32m+[m[32m    builder.Services.AddScoped<IUserRepository, UserRepository>();[m
+[32m+[m[32m    builder.Services.AddScoped<IUserService, UserService>();[m
+[32m+[m[32m    builder.Services.AddHttpClient<IAdressFinder, ViaCepAdapter>();[m
+[32m+[m[32m    builder.Services.AddControllers();[m
+[32m+[m[32m    builder.Services.AddEndpointsApiExplorer();[m
+[32m+[m[32m    builder.Services.AddProblemDetails();[m
+[32m+[m[32m    builder.Services.AddExceptionHandler<ExceptionMiddleware>();[m
+[32m+[m[32m    builder.Services.AddSwaggerGen();[m
+[32m+[m[32m    var app = builder.Build();[m
+ [m
+[31m-// Configure the HTTP request pipeline.[m
+[31m-if (app.Environment.IsDevelopment())[m
+[31m-{[m
+[31m-    app.UseSwagger();[m
+[31m-    app.UseSwaggerUI(c=>[m
+[32m+[m[32m    // Configure the HTTP request pipeline.[m
+[32m+[m[32m    if (app.Environment.IsDevelopment())[m
+     {[m
+[31m-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "RestBiblioteca v1");[m
+[31m-        c.RoutePrefix = string.Empty;[m
+[31m-    });[m
+[31m-}[m
+[32m+[m[32m        app.UseSwagger();[m
+[32m+[m[32m        app.UseSwaggerUI(c=>[m
+[32m+[m[32m        {[m
+[32m+[m[32m            c.SwaggerEndpoint("/swagger/v1/swagger.json", "RestBiblioteca v1");[m
+[32m+[m[32m            c.RoutePrefix = string.Empty;[m
+[32m+[m[32m        });[m
+[32m+[m[32m    }[m
+ [m
+ [m
+[31m-app.MapControllers();[m
+[31m-app.Run();[m
+[32m+[m[32m    app.UseExceptionHandler();[m
+[32m+[m[32m    app.MapControllers();[m
+[32m+[m[32m    app.Run();[m
+[1mdiff --git a/RestBiblioteca/infra/ExceptionMiddleware.cs b/RestBiblioteca/infra/ExceptionMiddleware.cs[m
+[1mnew file mode 100644[m
+[1mindex 0000000..de926e3[m
+[1m--- /dev/null[m
+[1m+++ b/RestBiblioteca/infra/ExceptionMiddleware.cs[m
+[36m@@ -0,0 +1,29 @@[m
+[32m+[m[32musing Microsoft.AspNetCore.Diagnostics;[m
+[32m+[m[32musing RestBiblioteca.Exceptions;[m
+[32m+[m
+[32m+[m[32mnamespace RestBiblioteca.infra;[m
+[32m+[m
+[32m+[m[32mpublic class ExceptionMiddleware : IExceptionHandler[m
+[32m+[m[32m{[m
+[32m+[m[32m    private readonly ILogger<ExceptionMiddleware> _logger;[m
+[32m+[m
+[32m+[m[32m    public ExceptionMiddleware(ILogger<ExceptionMiddleware> logger)[m
+[32m+[m[32m    {[m
+[32m+[m[32m        _logger = logger;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)[m
+[32m+[m[32m    {[m
+[32m+[m[32m        _logger.LogError(exception ,"Erro não tratado");[m
+[32m+[m[32m        var status = exception is HttpException hs ? hs.StatusCode : StatusCodes.Status500InternalServerError;[m
+[32m+[m[32m        var message = exception is HttpException hm ? hm.Message : exception.Message;[m
+[32m+[m[32m        var payload = exception is HttpException hp ? hp.Payload : null;[m
+[32m+[m[41m        [m
+[32m+[m[32m        httpContext.Response.StatusCode = status;[m
+[32m+[m[32m        httpContext.Response.ContentType = "application/json";[m
+[32m+[m
+[32m+[m[32m        var body = new { erro = message, details = payload };[m
+[32m+[m[32m        await httpContext.Response.WriteAsJsonAsync(body);[m
+[32m+[m[32m        return true;[m
+[32m+[m[32m    }[m
+[32m+[m[32m}[m
+\ No newline at end of file[m
+[1mdiff --git a/RestBiblioteca/service/impl/UserService.cs b/RestBiblioteca/service/impl/UserService.cs[m
+[1mindex 59f76a2..1d0f247 100644[m
+[1m--- a/RestBiblioteca/service/impl/UserService.cs[m
+[1m+++ b/RestBiblioteca/service/impl/UserService.cs[m
+[36m@@ -22,7 +22,7 @@[m [mpublic class UserService : IUserService[m
+         var adressInfo = await _adressFinder.findAdressAsync(userRequest.Cep);[m
+         if (adressInfo is null)[m
+         {[m
+[31m-            throw new InvalidCepException("Cep inválido");[m
+[32m+[m[32m            throw new InvalidCepException();[m
+         }[m
+ [m
+         var validAdress = new Adress(adressInfo.cep.Replace("-",""),[m
+[1mdiff --git a/RestBiblioteca/service/impl/ViaCepAdapter.cs b/RestBiblioteca/service/impl/ViaCepAdapter.cs[m
+[1mindex 792485a..988b34e 100644[m
+[1m--- a/RestBiblioteca/service/impl/ViaCepAdapter.cs[m
+[1m+++ b/RestBiblioteca/service/impl/ViaCepAdapter.cs[m
+[36m@@ -1,4 +1,5 @@[m
+ using RestBiblioteca.controller.DTO.AdressFinder;[m
+[32m+[m[32musing RestBiblioteca.Exceptions;[m
+ [m
+ namespace RestBiblioteca.service.impl;[m
+ [m
+[36m@@ -15,8 +16,17 @@[m [mpublic class ViaCepAdapter : IAdressFinder[m
+     public async Task<ViaCepDto?> findAdressAsync(string adress)[m
+     {[m
+         using HttpResponseMessage response = await _httpClient.GetAsync($"https://viacep.com.br/ws/{adress}/json/");[m
+[32m+[m[32m        if (!response.IsSuccessStatusCode)[m
+[32m+[m[32m        {[m
+[32m+[m[32m            throw new InvalidCepException("CEP inválido ou não encontrado.");[m
+[32m+[m[32m        }[m
+         response.EnsureSuccessStatusCode();[m
+         var jsonResponse = await response.Content.ReadFromJsonAsync<ViaCepDto>();[m
+[32m+[m[41m        [m
+[32m+[m[32m        if (jsonResponse == null)[m
+[32m+[m[32m        {[m
+[32m+[m[32m            throw new InvalidCepException("CEP inexistente.");[m
+[32m+[m[32m        }[m
+         return jsonResponse;[m
+     }[m
+ }[m
+\ No newline at end of file[m

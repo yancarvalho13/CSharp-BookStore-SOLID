@@ -3,7 +3,7 @@ using RestBiblioteca.Exceptions;
 
 namespace RestBiblioteca.service.impl;
 
-public class ViaCepAdapter : IAdressFinder
+internal sealed class ViaCepAdapter : IAdressFinder
 {
     private readonly HttpClient _httpClient;
 
