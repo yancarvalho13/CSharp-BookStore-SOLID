@@ -3,7 +3,7 @@ using RestBiblioteca.model;
 
 namespace RestBiblioteca;
 
-public sealed class AppDbContext : DbContext
+internal sealed class AppDbContext : DbContext
 {
     public DbSet<Book> Books {get; set;}
     public DbSet<Author> Authors { get; set; }
@@ -42,6 +42,9 @@ public sealed class AppDbContext : DbContext
                 .WithMany(p => p.Books)
                 .HasForeignKey(b => b.PublisherId)
                 .OnDelete(DeleteBehavior.Restrict);
+            
+            e.Navigation(b => b.Loans)
+                .UsePropertyAccessMode(PropertyAccessMode.Field);
         });
 
         modelBuilder.Entity<Author>(e =>
@@ -130,9 +133,40 @@ public sealed class AppDbContext : DbContext
                 nav.Property(a => a.State).HasColumnName("state").HasConversion<string>().HasMaxLength(120);
                 nav.Property(a => a.Street).HasColumnName("street").HasMaxLength(120);
                 nav.Property(a => a.Uf).HasColumnName("uf").HasConversion<string>().HasMaxLength(2);
-
+            
             });
 
+            e.Navigation(u => u.Loans)
+                .UsePropertyAccessMode(PropertyAccessMode.Field);
+
+        });
+        
+        modelBuilder.Entity<Loan>(e =>
+        {
+            e.ToTable("loans");
+            e.HasKey(l => l.Id);
+
+            e.Property(l => l.Id)
+                .ValueGeneratedOnAdd()
+                .HasIdentityOptions(startValue: 1);
+
+            e.HasOne(l => l.User)
+                .WithMany(u => u.Loans)
+                .HasForeignKey(l => l.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            e.HasOne(l => l.Book)
+                .WithMany(b => b.Loans)
+                .HasForeignKey(l => l.BookId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            e.Property(l => l.LoanDate)
+                .IsRequired()
+                .HasColumnType("date");
+
+            e.Property(l => l.ReturnDate)
+                .IsRequired()
+                .HasColumnType("date");
         });
 
 
